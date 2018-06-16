@@ -2,9 +2,27 @@
 
 Provision d'un hôte docker sous CentOS 7
 Résumé opérations:
-* Synchronistation serveur NTP.
+
+<!-- * Synchronistation serveur NTP. --> 
 * Update systèmes.
-* Provision docker-ce, avec création du groupe d'utilisateurs docker sans sudo.
+* Provision docker-ce
+* Création du groupe d'utilisateurs linux `docker` pour définir les utilisateurs pouvant exécuter des commandes docker sans élévation de droits `sudo`.
+
+
+### Dépendances 
+
+Cette recette doit être exécutée sur une machine:
+* sur laquelle CentOS 7 est le système d'exploitation, 
+* sur laquelle GIT a été installé,
+* sur laquellle le système CentOS a été synchronisé sur un serveur NTP
+
+
+Cette recette a donc pour dépendances:
+
+* Le système CentOS 7,
+* un serveur NTP
+* GIT 
+
 
 # Utilisation
 
