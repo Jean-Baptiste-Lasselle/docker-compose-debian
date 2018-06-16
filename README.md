@@ -1,6 +1,6 @@
 # Prinicpe
 
-Provision d'un hôte dpcker sous CentOS 7
+Provision d'un hôte docker sous CentOS 7
 Résumé opérations:
 * Synchronistation serveur NTP.
 * Update systèmes.
