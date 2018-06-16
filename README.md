@@ -4,7 +4,7 @@ Provision d'un hôte docker sous CentOS 7
 Résumé opérations:
 * Synchronistation serveur NTP.
 * Update systèmes.
-* Provision docker-ce, avec création du groupe d'utilsiateurs docker sans sudo.
+* Provision docker-ce, avec création du groupe d'utilisateurs docker sans sudo.
 
 # Utilisation
 
