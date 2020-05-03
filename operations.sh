@@ -124,14 +124,14 @@ synchroniserSurServeurNTP () {
 # synchroniserSurServeurNTP
 
 
-echo " +++provision+ dockhost / debian 9 Stretch +  COMMENCEE  - " >> $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 9 Stretch +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
 
 # PARTIE SILENCIEUSE
 
 # on rend les scripts à exécuter, exécutables.
-sudo chmod +x ./provision-hote-docker.sh >> $NOMFICHIERLOG
+sudo chmod +x ./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
 
 # provision hôte docker
 ./provision-hote-docker.sh >> $NOMFICHIERLOG
 
-echo " +++provision+ dockhost / debian 9 Stretch +  TERMINEE  - " >> $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 9 Stretch +  TERMINEE  - " | tee -a $NOMFICHIERLOG
