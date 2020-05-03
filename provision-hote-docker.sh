@@ -35,19 +35,34 @@
 # -----------------------------------------------------------------------------------------------------------------------
 #
 # sudo yum clean all -y && sudo yum update -y
-sudo yum install -y wget
-sudo rm -f index.html
-sudo rm -f installation-docker-ce-not-production-env.sh
-sudo wget https://get.docker.com/
-sudo cp index.html installation-docker-ce-not-production-env.sh
-sudo rm -f index.html
-sudo yum --enablerepo=extras install -y epel-release
-sudo yum update -y && sudo yum clean all -y && sudo yum update -y
-sudo chmod +x installation-docker-ce-not-production-env.sh
-sudo ./installation-docker-ce-not-production-env.sh
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+sudo apt-get update -y
+
+sudo apt-get install \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg-agent \
+  software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+
+echo "Verify that you now have the finger print [9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88]"
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+
 sudo usermod -aG docker $USER
 # 
 sudo systemctl enable docker
 sudo systemctl start docker
 
+docker version
 # remarque :: La clé publique pour docker-ce-17.11.0.ce-1.el7.centos.x86_64.rpm n'est pas installée
