@@ -121,10 +121,10 @@ synchroniserSurServeurNTP () {
 
 
 
-synchroniserSurServeurNTP
+# synchroniserSurServeurNTP
 
 
-echo " +++provision+ dockhost / centos 7 +  COMMENCEE  - " >> $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 9 Stretch +  COMMENCEE  - " >> $NOMFICHIERLOG
 
 # PARTIE SILENCIEUSE
 
@@ -134,4 +134,4 @@ sudo chmod +x ./provision-hote-docker.sh >> $NOMFICHIERLOG
 # provision hôte docker
 ./provision-hote-docker.sh >> $NOMFICHIERLOG
 
-echo " +++provision+ dockhost / centos 7 +  TERMINEE  - " >> $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 9 Stretch +  TERMINEE  - " >> $NOMFICHIERLOG
