@@ -34,8 +34,8 @@
 # installations bare-metal
 # -----------------------------------------------------------------------------------------------------------------------
 #
-# sudo yum clean all -y && sudo yum update -y
-sudo apt-get remove docker docker-engine docker.io containerd runc
+# remove previous docker installations
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
 sudo apt-get update -y
 
@@ -46,19 +46,24 @@ sudo apt-get install -y \
   gnupg-agent \
   software-properties-common
 
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+# ---
+# Add Docker rofficial GPG Key :
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+# curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+# echo "Verify that you now have the finger print [9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88]"
+# sudo apt-key fingerprint 0EBFCD88
 
-echo "Verify that you now have the finger print [9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88]"
-sudo apt-key fingerprint 0EBFCD88
+# sudo add-apt-repository \
+   # "deb [arch=amd64] https://download.docker.com/linux/debian \
+   # $(lsb_release -cs) \
+   # stable"
 
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"
+echo \
+ "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-
 
 sudo usermod -aG docker $USER
 #
