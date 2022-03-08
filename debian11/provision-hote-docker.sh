@@ -36,8 +36,10 @@
 #
 # remove previous docker installations
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
-
 sudo apt-get update -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+sudo apt-get update -y
+
 
 sudo apt-get install -y \
   apt-transport-https \
