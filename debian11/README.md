@@ -1,6 +1,6 @@
 # Prinicpe
 
-Provision d'un hôte docker sous debian 11 / 11
+Provision d'un hôte docker sous `Debian 11`
 
 Résumé opérations:
 
@@ -26,7 +26,6 @@ Cette recette a donc pour dépendances:
 
 
 # Utilisation
-
 
 * Install `Git` on Debian 11 (build from source) :
 
@@ -71,6 +70,9 @@ git --version
 * Install Docker on Debian 11 :
 
 ```bash
+export DESIRED_VERSION="develop"
+export DESIRED_VERSION="0.0.1"
+
 export URI_REPO_RECETTE=git@github.com:Jean-Baptiste-Lasselle/docker-compose-debian.git
 export URI_REPO_RECETTE=https://github.com/Jean-Baptiste-Lasselle/docker-compose-debian.git
 
@@ -79,7 +81,7 @@ rm -rf $PROVISONING_HOME
 mkdir -p $PROVISONING_HOME
 cd $PROVISONING_HOME
 git clone "$URI_REPO_RECETTE" .
-git checkout develop
+git checkout "${DESIRED_VERSION}"
 cd debian11/
 sudo chmod +x operations.sh
 ./operations.sh
