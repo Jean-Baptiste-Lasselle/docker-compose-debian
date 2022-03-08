@@ -1,19 +1,19 @@
 # Prinicpe
 
-Provision d'un hôte docker sous Debian 9 / 10 
+Provision d'un hôte docker sous Debian 9 / 10
 
 Résumé opérations:
 
-<!-- * Synchronistation serveur NTP. --> 
+<!-- * Synchronistation serveur NTP. -->
 * Update systèmes.
 * Provision docker-ce
 * Création du groupe d'utilisateurs linux `docker` pour définir les utilisateurs pouvant exécuter des commandes docker sans élévation de droits `sudo`.
 
 
-### Dépendances 
+### Dépendances
 
 Cette recette doit être exécutée sur une machine:
-* sur laquelle Debian 9 / 10 est le système d'exploitation, 
+* sur laquelle Debian 9 / 10 est le système d'exploitation,
 * sur laquelle GIT a été installé,
 * sur laquellle le système CentOS a été synchronisé sur un serveur NTP
 
@@ -22,7 +22,7 @@ Cette recette a donc pour dépendances:
 
 * Le système Debian 9 / 10,
 * un serveur NTP
-* GIT 
+* GIT
 
 
 # Utilisation
@@ -52,3 +52,11 @@ et pour ensuit einstaller docker-compose, il suffit d'exécuter :
 ./provision-docker-compose.sh
 ```
 
+
+## Todo
+
+Add a global server setup, with NTP, and basic security :
+
+* openssh server
+* `ufw` firewall, with rule to allow ssh connections
+* http proxy to analyse logs
