@@ -61,11 +61,6 @@
 export MAISON_OPERATIONS
 MAISON_OPERATIONS=$(pwd)
 
-# -
-export NOMFICHIERLOG
-NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
-
-
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
 
@@ -75,22 +70,45 @@ NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
 #########################################							FONCTIONS						##########################################
 ##############################################################################################################################################
 
+
+installNTPclient () {
+	sudo apt-get install -y ntp
+  sudo systemctl restart ntp
+  ntpq -p
+}
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# Cette fonction permet de re-synchroniser l'hôte docker sur un serveur NTP, sinon# certaines installations dépendantes
+# de téléchargements avec vérification de certificat SSL
+syncNtp () {
+
+	export POKUS_NTP_POOL=$(cat /etc/ntp.conf | grep pool | grep -v '#' | head -n 1 | awk '{print $2}')
+  echo "POKUS_NTP_POOL=[${POKUS_NTP_POOL}]"
+	sudo apt-get install -y ntpdate
+	date
+	sudo systemctl stop ntp
+	sudo ntpdate -s "${POKUS_NTP_POOL}"
+	sudo systemctl restart ntp
+	date
+}
+
+
+configureTimeZone () {
+	timedatectl list-timezones --no-pager | grep Europe | grep Paris
+	sudo timedatectl set-timezone Europe/Paris
+}
+
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 ##############################################################################################################################################
 #########################################							OPS								##########################################
 ##############################################################################################################################################
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
-./ntp-setup.sh
 
-echo " +++provision+ dockhost / debian 11 Stretch +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
 
-# PARTIE SILENCIEUSE
+# synchroniserSurServeurNTP
 
-# on rend les scripts à exécuter, exécutables.
-sudo chmod +x ./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
-
-# provision hôte docker
-./provision-hote-docker.sh >> $NOMFICHIERLOG
-
-echo " +++provision+ dockhost / debian 11 Stretch +  TERMINEE  - " | tee -a $NOMFICHIERLOG
+configureTimeZone
+installNTPclient
+syncNtp

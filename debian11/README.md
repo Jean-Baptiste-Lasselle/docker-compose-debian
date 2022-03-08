@@ -28,11 +28,44 @@ Cette recette a donc pour dépendances:
 # Utilisation
 
 
-* Install `Git` on Debian 11 :
+* Install `Git` on Debian 11 (build from source) :
 
 ```bash
-# --
+export GIT_DESIRED_VERSION="2.35.1"
 
+# --
+mkdir build_from_src_git/
+cd build_from_src_git/
+
+curl -LO https://github.com/git/git/archive/refs/tags/v${GIT_DESIRED_VERSION}.tar.gz
+
+mkdir sourcecode/
+
+tar -xvf ./v${GIT_DESIRED_VERSION}.tar.gz -C sourcecode/
+
+cd sourcecode/git-2.35.1/
+
+# ---
+# -- 1./ first install all build dependencies
+#
+sudo apt-get update -y
+sudo apt-get install -y build-essential libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
+
+# ---
+# -- 2./ then run the build from source
+#
+sudo make prefix=/usr/local all
+
+# ---
+# -- 3./ then run the installation script
+#
+sudo make prefix=/usr/local install
+
+
+# ---
+# -- 4./ Finally check installed git version matches  GIT_DESIRED_VERSION
+#
+git --version
 ```
 
 * Install Docker on Debian 11 :

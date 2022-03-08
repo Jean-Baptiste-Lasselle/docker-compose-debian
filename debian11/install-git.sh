@@ -1,5 +1,5 @@
 #!/bin/bash
-# Hôte Docker sur centos 7
+
 ############################################################
 ############################################################
 # 					Compatibilité système		 		   #
@@ -60,16 +60,17 @@
 # --------------------------------------------------------------------------------------------------------------------------------------------
 export MAISON_OPERATIONS
 MAISON_OPERATIONS=$(pwd)
-
-# -
-export NOMFICHIERLOG
-NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
+export GIT_DESIRED_VERSION="2.35.1"
 
 
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
 
-
+# --------------------------------------------------------------------------------------------------------------------------------------------
+##############################################################################################################################################
+#########################################							SYS dependencies		##########################################
+##############################################################################################################################################
+sudo apt-get install -y curl
 # --------------------------------------------------------------------------------------------------------------------------------------------
 ##############################################################################################################################################
 #########################################							FONCTIONS						##########################################
@@ -81,16 +82,38 @@ NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
 ##############################################################################################################################################
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
-./ntp-setup.sh
 
-echo " +++provision+ dockhost / debian 11 Stretch +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
 
-# PARTIE SILENCIEUSE
+# --
+mkdir build_from_src_git/
+cd build_from_src_git/
 
-# on rend les scripts à exécuter, exécutables.
-sudo chmod +x ./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
+curl -LO https://github.com/git/git/archive/refs/tags/v${GIT_DESIRED_VERSION}.tar.gz
 
-# provision hôte docker
-./provision-hote-docker.sh >> $NOMFICHIERLOG
+mkdir sourcecode/
 
-echo " +++provision+ dockhost / debian 11 Stretch +  TERMINEE  - " | tee -a $NOMFICHIERLOG
+tar -xvf ./v${GIT_DESIRED_VERSION}.tar.gz -C sourcecode/
+
+cd sourcecode/git-${GIT_DESIRED_VERSION}/
+
+# ---
+# -- 1./ first install all build dependencies
+#
+sudo apt-get update -y
+sudo apt-get install -y build-essential libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
+
+# ---
+# -- 2./ then run the build from source
+#
+sudo make prefix=/usr/local all
+
+# ---
+# -- 3./ then run the installation script
+#
+sudo make prefix=/usr/local install
+
+
+# ---
+# -- 4./ Finally check installed git version matches  GIT_DESIRED_VERSION
+#
+git --version
