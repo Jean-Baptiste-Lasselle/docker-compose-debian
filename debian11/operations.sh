@@ -1,5 +1,5 @@
 #!/bin/bash
-# Hôte Docker sur centos 7
+# Hôte Docker sur Debian 11 - Bullseye
 ############################################################
 ############################################################
 # 					Compatibilité système		 		   #
@@ -58,12 +58,10 @@
 #########################################							ENV								##########################################
 ##############################################################################################################################################
 # --------------------------------------------------------------------------------------------------------------------------------------------
-export MAISON_OPERATIONS
-MAISON_OPERATIONS=$(pwd)
+export MAISON_OPERATIONS=$(pwd)
 
 # -
-export NOMFICHIERLOG
-NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
+export NOMFICHIERLOG="$(pwd)/provision-dockhost-debian11.log"
 
 
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
@@ -83,7 +81,7 @@ NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
 
 # ./ntp-setup.sh
 
-echo " +++provision+ dockhost / debian 11 Stretch +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 11 Bullseye +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
 
 # PARTIE SILENCIEUSE
 
@@ -91,6 +89,8 @@ echo " +++provision+ dockhost / debian 11 Stretch +  COMMENCEE  - " | tee -a $NO
 sudo chmod +x ./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
 
 # provision hôte docker
-./provision-hote-docker.sh >> $NOMFICHIERLOG
+./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
 
-echo " +++provision+ dockhost / debian 11 Stretch +  TERMINEE  - " | tee -a $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 11 Bullseye +  TERMINEE  - " | tee -a $NOMFICHIERLOG
+echo " +++ SEE LOGS IN + ${NOMFICHIERLOG}  - " | tee -a $NOMFICHIERLOG
+echo " +++++++++++++++++++++++++++++++++++++++++++++  - " | tee -a $NOMFICHIERLOG

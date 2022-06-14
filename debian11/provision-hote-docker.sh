@@ -64,13 +64,24 @@ echo \
  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-sudo usermod -aG docker $USER
+export =$(whoami)
+sudo usermod -aG docker $MOIMEME
 #
 sudo systemctl enable docker
 sudo systemctl start docker
 
 docker version
 # remarque :: La clé publique pour docker-ce-17.11.0.ce-1.el7.centos.x86_64.rpm n'est pas installée
+
+
+echo "# -----------------------------------------------------------------------------------------------------------------------"
+echo "#  Docker is now installed!!"
+echo "# -----------------------------------------------------------------------------------------------------------------------"
+echo "#  Now log into the bash with [su ${MOIMEME}]"
+echo "# --- --- --- -"
+echo "#  And you will be able to run docker without sudo, e.g. [docker ps -a] "
+echo "# -----------------------------------------------------------------------------------------------------------------------"
+#

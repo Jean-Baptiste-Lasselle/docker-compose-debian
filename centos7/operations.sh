@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Hôte Docker sur centos 7
 ############################################################
 ############################################################
 # 					Compatibilité système		 		   #
@@ -9,44 +9,44 @@
 # ----------------------------------------------------------
 # [Pour Comparer votre version d'OS à
 #  celles mentionnées ci-dessous]
-#
+# 
 # ¤ distributions Ubuntu:
 #		lsb_release -a
 #
 # ¤ distributions CentOS:
 # 		cat /etc/redhat-release
-#
-#
+# 
+# 
 # ----------------------------------------------------------
 
 # ----------------------------------------------------------
 # testé pour:
-#
-#
-#
-#
+# 
+# 
+# 
+# 
 # ----------------------------------------------------------
 # (Ubuntu)
 # ----------------------------------------------------------
-#
+# 
 # ¤ [TEST-OK]
 #
 # 	[Distribution ID: 	Ubuntu]
 # 	[Description: 		Ubuntu 16.04 LTS]
 # 	[Release: 			16.04]
 # 	[codename:			xenial]
-#
-#
-#
-#
-#
-#
+# 
+# 
+# 
+# 
+# 
+# 
 # ----------------------------------------------------------
 # (CentOS)
 # ----------------------------------------------------------
-#
-#
-#
+# 
+# 
+# 
 # ...
 # ----------------------------------------------------------
 
@@ -58,25 +58,60 @@
 #########################################							ENV								##########################################
 ##############################################################################################################################################
 # --------------------------------------------------------------------------------------------------------------------------------------------
-export MAISON_OPERATIONS=$(pwd)
-# export GIT_DESIRED_VERSION="2.35.1"
-export GIT_DESIRED_VERSION="2.36.1"
-export GIT_DESIRED_VERSION=${GIT_DESIRED_VERSION:-"2.36.1"}
+export MAISON_OPERATIONS
+MAISON_OPERATIONS=$(pwd)
 
+# -
+export NOMFICHIERLOG
+NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
 
 
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
 
-# --------------------------------------------------------------------------------------------------------------------------------------------
-##############################################################################################################################################
-#########################################							SYS dependencies		##########################################
-##############################################################################################################################################
-sudo apt-get install -y curl
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 ##############################################################################################################################################
 #########################################							FONCTIONS						##########################################
 ##############################################################################################################################################
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------------------------------
+# Cette fonction permet de re-synchroniser l'hôte docker sur un serveur NTP, sinon# certaines installations dépendantes
+# de téléchargements avec vérification de certtificat SSL
+synchroniserSurServeurNTP () {
+	# ---------------------------------------------------------------------------------------------------------------------------------------------
+	# ------	SYNCHRONSITATION SUR UN SERVEUR NTP PUBLIC (Y-en-a-til des gratuits dont je puisse vérifier le certificat SSL TLSv1.2 ?)
+	# ---------------------------------------------------------------------------------------------------------------------------------------------
+	# ---------------------------------------------------------------------------------------------------------------------------------------------
+	# ---	Pour commencer, pour ne PAS FAIRE PETER TOUS LES CERTIFICATS SSL vérifiés pour les installation yum
+	# ---	
+	# ---	Sera aussi utilise pour a provision de tous les noeuds d'infrastructure assurant des fonctions d'authentification:
+	# ---		Le serveur Free IPA Server
+	# ---		Le serveur OAuth2/SAML utilisé par/avec Free IPA Server, pour gérer l'authentification 
+	# ---		Le serveur Let's Encrypt et l'ensemble de l'infrastructure à clé publique gérée par Free IPA Server
+	# ---		Toutes les macines gérées par Free-IPA Server, donc les hôtes réseau exécutant des conteneurs Girofle
+	# 
+	# 
+	# >>>>>>>>>>> Mais en fait la synchronisation NTP doit se faire sur un référentiel commun à la PKI à laquelle on choisit
+	# 			  de faire confiance pour l'ensemble de la provision. Si c'est une PKI entièrement interne, alors le système 
+	# 			  comprend un repository linux privé contenant tous les packes à installer, dont docker-ce.
+	# 
+	# ---------------------------------------------------------------------------------------------------------------------------------------------
+	echo "date avant la re-synchronisation [Serveur NTP=$SERVEUR_NTP :]" >> $NOMFICHIERLOG
+	date >> $NOMFICHIERLOG
+	sudo which ntpdate
+	sudo yum install -y ntp
+	sudo ntpdate 0.us.pool.ntp.org
+	echo "date après la re-synchronisation [Serveur NTP=$SERVEUR_NTP :]" >> $NOMFICHIERLOG
+	date >> $NOMFICHIERLOG
+	# pour re-synchroniser l'horloge matérielle, et ainsi conserver l'heure après un reboot, et ce y compris après et pendant
+	# une coupure réseau
+	sudo hwclock --systohc
+
+}
 
 # --------------------------------------------------------------------------------------------------------------------------------------------
 ##############################################################################################################################################
@@ -86,36 +121,17 @@ sudo apt-get install -y curl
 
 
 
-# --
-mkdir build_from_src_git/
-cd build_from_src_git/
-
-curl -LO https://github.com/git/git/archive/refs/tags/v${GIT_DESIRED_VERSION}.tar.gz
-
-mkdir sourcecode/
-
-tar -xvf ./v${GIT_DESIRED_VERSION}.tar.gz -C sourcecode/
-
-cd sourcecode/git-${GIT_DESIRED_VERSION}/
-
-# ---
-# -- 1./ first install all build dependencies
-#
-sudo apt-get update -y
-sudo apt-get install -y build-essential libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
-
-# ---
-# -- 2./ then run the build from source
-#
-sudo make prefix=/usr/local all
-
-# ---
-# -- 3./ then run the installation script
-#
-sudo make prefix=/usr/local install
+# synchroniserSurServeurNTP
 
 
-# ---
-# -- 4./ Finally check installed git version matches  GIT_DESIRED_VERSION
-#
-git --version
+echo " +++provision+ dockhost / debian 9 Stretch +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
+
+# PARTIE SILENCIEUSE
+
+# on rend les scripts à exécuter, exécutables.
+sudo chmod +x ./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
+
+# provision hôte docker
+./provision-hote-docker.sh >> $NOMFICHIERLOG
+
+echo " +++provision+ dockhost / debian 9 Stretch +  TERMINEE  - " | tee -a $NOMFICHIERLOG

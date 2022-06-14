@@ -1,8 +1,11 @@
 #!/bin/bash
 
-sudo yum install epel-release
-sudo yum install -y python-pip
-sudo pip install docker-compose
-sudo yum upgrade python*
-docker-compose -v
+echo "Not implemented yet (will it ever be?)"
+exit 1
+# 1./ Install Python pip dev env ?
 
+# 2./ Use pip to Install Docker Compose ?
+
+sudo pip install docker-compose
+
+docker-compose -v
