@@ -17,6 +17,7 @@
 export LX_NETWORK_INTERFACE_NAME="enp0s8"
 cat <<EOF>./etc.net.int.enp0s8.txt
 auto ${LX_NETWORK_INTERFACE_NAME}
+allow-hotplug ${LX_NETWORK_INTERFACE_NAME}
 iface ${LX_NETWORK_INTERFACE_NAME} inet dhcp
 EOF
 

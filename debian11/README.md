@@ -8,7 +8,7 @@ Résumé opérations:
 * Update systèmes.
 * Provision `docker-ce`
 * Création du groupe d'utilisateurs linux `docker` pour définir les utilisateurs pouvant exécuter des commandes docker sans élévation de droits `sudo`.
-
+* Installation `Docker Compose`
 
 ### Dépendances
 
