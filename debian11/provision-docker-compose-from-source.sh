@@ -11,11 +11,13 @@ cd ./dokcer-comopose-from-src/
 git checkout "v${D_COMPOSE_VERSION}"
 
 
+echo "Implementation not operational : I dont know how to build docker compose from source."
+exit 1
 # 1./ Build
 
 docker build . --target cross \
   --build-arg BUILD_TAGS \
-  --build-arg GIT_TAG=$(GIT_TAG) \
+  --build-arg GIT_TAG="v${D_COMPOSE_VERSION}" \
   --output ./bin
 
 # 2./ Use pip to Install Docker Compose ?

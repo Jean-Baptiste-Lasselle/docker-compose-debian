@@ -100,7 +100,7 @@ et pour ensuite installer docker-compose, il suffit d'exécuter :
 ```bash
 export D_COMPOSE_VERSION="2.11.2"
 chmod +x ./*.sh
-./provision-docker-compose-from-source.sh
+./provision-docker-compose.sh
 
 ```
 
