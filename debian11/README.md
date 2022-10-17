@@ -5,10 +5,10 @@ Provision d'un hôte docker sous `Debian 11`
 Résumé opérations:
 
 <!-- * Synchronistation serveur NTP. -->
-* Update systèmes.
+* Mise à jour système d'exploitation `Debian 11`.
 * Provision `docker-ce`
 * Création du groupe d'utilisateurs linux `docker` pour définir les utilisateurs pouvant exécuter des commandes docker sans élévation de droits `sudo`.
-* Installation `Docker Compose`
+* Installation `Docker Compose`.
 
 ### Dépendances
 
@@ -20,14 +20,17 @@ Cette recette doit être exécutée sur une machine:
 
 Cette recette a donc pour dépendances:
 
-* Le système Debian 11,
-* GIT
+* Le système `Debian 11`,
+* `Git`
 <!-- * un serveur NTP -->
 
 
 # Utilisation
 
-* Install `Git` on Debian 11 (build from source) :
+
+## Install Git
+
+* Install `Git` on `Debian 11` (build from source) :
 
 ```bash
 export GIT_DESIRED_VERSION="2.35.1"
@@ -67,6 +70,8 @@ sudo make prefix=/usr/local install
 git --version
 ```
 
+## Install Docker CE
+
 * Install Docker on Debian 11 :
 
 ```bash
@@ -88,6 +93,9 @@ chmod +x operations.sh
 ```
 
 et pour ensuite installer docker-compose, il suffit d'exécuter :
+
+
+## Install `Docker-Compose`
 
 ```bash
 export D_COMPOSE_VERSION="2.11.2"
