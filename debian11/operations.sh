@@ -1,69 +1,16 @@
 #!/bin/bash
-# Hôte Docker sur centos 7
+# Hôte Docker sur Debian 11 - Bullseye
 ############################################################
 ############################################################
-# 					Compatibilité système		 		   #
+# 					Docker CE Installation		 		   #
 ############################################################
 ############################################################
 
-# ----------------------------------------------------------
-# [Pour Comparer votre version d'OS à
-#  celles mentionnées ci-dessous]
-#
-# ¤ distributions Ubuntu:
-#		lsb_release -a
-#
-# ¤ distributions CentOS:
-# 		cat /etc/redhat-release
-#
-#
-# ----------------------------------------------------------
 
-# ----------------------------------------------------------
-# testé pour:
-#
-#
-#
-#
-# ----------------------------------------------------------
-# (Ubuntu)
-# ----------------------------------------------------------
-#
-# ¤ [TEST-OK]
-#
-# 	[Distribution ID: 	Ubuntu]
-# 	[Description: 		Ubuntu 16.04 LTS]
-# 	[Release: 			16.04]
-# 	[codename:			xenial]
-#
-#
-#
-#
-#
-#
-# ----------------------------------------------------------
-# (CentOS)
-# ----------------------------------------------------------
-#
-#
-#
-# ...
-# ----------------------------------------------------------
-
-
-
-
-# --------------------------------------------------------------------------------------------------------------------------------------------
-##############################################################################################################################################
-#########################################							ENV								##########################################
-##############################################################################################################################################
-# --------------------------------------------------------------------------------------------------------------------------------------------
-export MAISON_OPERATIONS
-MAISON_OPERATIONS=$(pwd)
+export MAISON_OPERATIONS=$(pwd)
 
 # -
-export NOMFICHIERLOG
-NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
+export NOMFICHIERLOG="$(pwd)/provision-dockhost-debian11.log"
 
 
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
@@ -83,14 +30,16 @@ NOMFICHIERLOG="$(pwd)/provision-dockhost-centos7.log"
 
 # ./ntp-setup.sh
 
-echo " +++provision+ dockhost / debian 11 Stretch +  COMMENCEE  - " | tee -a $NOMFICHIERLOG
+echo " +++provision+ dockhost / debian 11 Bullseye +  COMMENCEE  - "
 
 # PARTIE SILENCIEUSE
 
 # on rend les scripts à exécuter, exécutables.
-sudo chmod +x ./provision-hote-docker.sh | tee -a $NOMFICHIERLOG
+sudo chmod +x ./provision-hote-docker.sh
 
 # provision hôte docker
-./provision-hote-docker.sh >> $NOMFICHIERLOG
+./provision-hote-docker.sh
 
-echo " +++provision+ dockhost / debian 11 Stretch +  TERMINEE  - " | tee -a $NOMFICHIERLOG
+echo " +++++++++++++++++++++++++++++++++++++++++++++  - "
+echo " +++provision+ dockhost / debian 11 Bullseye +  TERMINEE  - "
+echo " +++++++++++++++++++++++++++++++++++++++++++++  - "

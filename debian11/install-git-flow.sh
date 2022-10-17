@@ -59,10 +59,6 @@
 ##############################################################################################################################################
 # --------------------------------------------------------------------------------------------------------------------------------------------
 export MAISON_OPERATIONS=$(pwd)
-# export GIT_DESIRED_VERSION="2.35.1"
-export GIT_DESIRED_VERSION="2.36.1"
-export GIT_DESIRED_VERSION=${GIT_DESIRED_VERSION:-"2.36.1"}
-
 
 
 ######### -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -# -
@@ -72,7 +68,7 @@ export GIT_DESIRED_VERSION=${GIT_DESIRED_VERSION:-"2.36.1"}
 ##############################################################################################################################################
 #########################################							SYS dependencies		##########################################
 ##############################################################################################################################################
-sudo apt-get install -y curl
+
 # --------------------------------------------------------------------------------------------------------------------------------------------
 ##############################################################################################################################################
 #########################################							FONCTIONS						##########################################
@@ -84,38 +80,7 @@ sudo apt-get install -y curl
 ##############################################################################################################################################
 # --------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-# --
-mkdir build_from_src_git/
-cd build_from_src_git/
-
-curl -LO https://github.com/git/git/archive/refs/tags/v${GIT_DESIRED_VERSION}.tar.gz
-
-mkdir sourcecode/
-
-tar -xvf ./v${GIT_DESIRED_VERSION}.tar.gz -C sourcecode/
-
-cd sourcecode/git-${GIT_DESIRED_VERSION}/
-
 # ---
-# -- 1./ first install all build dependencies
+# -- 1./ install from debian packages
 #
-sudo apt-get update -y
-sudo apt-get install -y build-essential libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
-
-# ---
-# -- 2./ then run the build from source
-#
-sudo make prefix=/usr/local all
-
-# ---
-# -- 3./ then run the installation script
-#
-sudo make prefix=/usr/local install
-
-
-# ---
-# -- 4./ Finally check installed git version matches  GIT_DESIRED_VERSION
-#
-git --version
+sudo apt-get update -y && sudo apt-get install -y git-flow
