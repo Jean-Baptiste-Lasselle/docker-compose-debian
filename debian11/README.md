@@ -83,20 +83,17 @@ cd $PROVISONING_HOME
 git clone "$URI_REPO_RECETTE" .
 git checkout "${DESIRED_VERSION}"
 cd debian11/
-sudo chmod +x operations.sh
+chmod +x operations.sh
 ./operations.sh
-```
-
-Soit en une seule ligne:
-
-```
-export URI_REPO_RECETTE=https://github.com/Jean-Baptiste-Lasselle/docker-compose-debian.git && export PROVISONING_HOME=$HOME/provision-hote-docker && rm -rf $PROVISONING_HOME && mkdir -p $PROVISONING_HOME && cd $PROVISONING_HOME && git clone "$URI_REPO_RECETTE" . && git checkout develop && cd debian11/ && sudo chmod +x ./operations.sh && ./operations.sh
 ```
 
 et pour ensuite installer docker-compose, il suffit d'exécuter :
 
 ```bash
-./provision-docker-compose.sh
+export D_COMPOSE_VERSION="2.11.2"
+
+./provision-docker-compose-from-source.sh
+
 ```
 
 
