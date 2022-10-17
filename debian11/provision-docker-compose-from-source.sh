@@ -3,7 +3,8 @@
 export D_COMPOSE_VERSION=${D_COMPOSE_VERSION:-"2.6.0"}
 
 # 0./ Git clone the sourcecode of Docker Compose
-git clone https://github.com/docker/compose.git ./dokcer-comopose-from-src/
+# git clone https://github.com/docker/compose.git ./dokcer-comopose-from-src/
+git clone git@github.com:docker/compose.git ./dokcer-comopose-from-src/
 
 cd ./dokcer-comopose-from-src/
 

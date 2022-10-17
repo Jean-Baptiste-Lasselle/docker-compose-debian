@@ -75,8 +75,8 @@ git --version
 * Install Docker on Debian 11 :
 
 ```bash
-export DESIRED_VERSION="develop"
 export DESIRED_VERSION="0.0.1"
+export DESIRED_VERSION="develop"
 
 export URI_REPO_RECETTE=git@github.com:Jean-Baptiste-Lasselle/docker-compose-debian.git
 export URI_REPO_RECETTE=https://github.com/Jean-Baptiste-Lasselle/docker-compose-debian.git
@@ -99,7 +99,7 @@ et pour ensuite installer docker-compose, il suffit d'exécuter :
 
 ```bash
 export D_COMPOSE_VERSION="2.11.2"
-
+chmod +x ./*.sh
 ./provision-docker-compose-from-source.sh
 
 ```
